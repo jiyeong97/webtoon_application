@@ -10,9 +10,12 @@ class HomeScreen extends StatelessWidget {
         elevation: 2,
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
-        title: const Text(
-          "Today's toons",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, fontFamily:'RobotoMono'),
+        
+        title: const Center(
+          child: Text(
+            "Today's toons",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600,),
+          ),
         ),
       ),
     );
