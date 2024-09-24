@@ -56,7 +56,6 @@ class HomeScreen extends StatelessWidget {
               Container(
                 width: 250,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
                   boxShadow:[
                     BoxShadow(
                       blurRadius: 10,
