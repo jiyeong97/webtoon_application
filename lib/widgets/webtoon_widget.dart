@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webtoon_application/screens/detail_screen.dart';
 
 class Webtoon extends StatelessWidget {
   final String title, thumb, id;
@@ -12,37 +13,46 @@ class Webtoon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 250,
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              blurRadius: 10,
-              offset: const Offset(10, 10),
-              color: Colors.black.withOpacity(0.5),
-            )
-          ]),
-          child: Image.network(
-            thumb,
-            headers: const {
-              'User-Agent':
-                  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-              'Referer': 'https://comic.naver.com',
-            },
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    DetailScreen(title: title, thumb: thumb, id: id)));
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 250,
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                blurRadius: 10,
+                offset: const Offset(10, 10),
+                color: Colors.black.withOpacity(0.5),
+              )
+            ]),
+            child: Image.network(
+              thumb,
+              headers: const {
+                'User-Agent':
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'Referer': 'https://comic.naver.com',
+              },
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w400,
+          const SizedBox(
+            height: 10,
           ),
-        )
-      ],
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w400,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
