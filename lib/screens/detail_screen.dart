@@ -26,9 +26,11 @@ class DetailScreen extends StatelessWidget {
           ),
         ),
       ),
-      body:Column(
+      body: Column(
         children: [
-          const SizedBox(height: 50,),
+          const SizedBox(
+            height: 50,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -36,13 +38,14 @@ class DetailScreen extends StatelessWidget {
                 tag: id,
                 child: Container(
                   width: 250,
-                  decoration: BoxDecoration(boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10,
-                      offset: const Offset(10, 10),
-                      color: Colors.black.withOpacity(0.5),
-                    )
-                  ]),
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 10,
+                          offset: const Offset(10, 10),
+                          color: Colors.black.withOpacity(0.5),
+                        )
+                      ]),
                   child: Image.network(
                     thumb,
                     headers: const {
