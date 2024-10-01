@@ -6,7 +6,6 @@ import 'package:webtoon_application/models/webtoon_episode_model.dart';
 class DetailScreen extends StatefulWidget {
   final String title, thumb, id;
 
-
   const DetailScreen({
     super.key,
     required this.title,
@@ -19,7 +18,6 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-
   late Future<WebtoonDetailModel> webtoon;
   late Future<List<WebtoonEpisodeModel>> episodes;
 
@@ -59,14 +57,13 @@ class _DetailScreenState extends State<DetailScreen> {
                 tag: widget.id,
                 child: Container(
                   width: 250,
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 10,
-                          offset: const Offset(10, 10),
-                          color: Colors.black.withOpacity(0.5),
-                        )
-                      ]),
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      blurRadius: 10,
+                      offset: const Offset(10, 10),
+                      color: Colors.black.withOpacity(0.5),
+                    )
+                  ]),
                   child: Image.network(
                     widget.thumb,
                     headers: const {
@@ -79,6 +76,37 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ],
           ),
+          const SizedBox(
+            height: 28,
+          ),
+          FutureBuilder(
+            future: webtoon,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        snapshot.data!.about,
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        '${snapshot.data!.genre} / ${snapshot.data!.age}',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return const Text("...");
+            },
+          )
         ],
       ),
     );
