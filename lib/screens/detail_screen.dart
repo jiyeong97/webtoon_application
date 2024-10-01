@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:webtoon_application/models/webtoon_detail_model.dart';
+import 'package:webtoon_application/services/api_service.dart';
+import 'package:webtoon_application/models/webtoon_episode_model.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final String title, thumb, id;
+
+
   const DetailScreen({
     super.key,
     required this.title,
     required this.thumb,
     required this.id,
   });
+
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+
+  late Future<WebtoonDetailModel> webtoon;
+  late Future<List<WebtoonEpisodeModel>> episodes;
+
+  @override
+  void initState() {
+    super.initState();
+    webtoon = ApiService.getToonById(widget.id);
+    episodes = ApiService.getLatestEpisodesById(widget.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +39,7 @@ class DetailScreen extends StatelessWidget {
         foregroundColor: Colors.white,
         title: Center(
           child: Text(
-            title,
+            widget.title,
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w500,
@@ -35,7 +56,7 @@ class DetailScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Hero(
-                tag: id,
+                tag: widget.id,
                 child: Container(
                   width: 250,
                   decoration: BoxDecoration(
@@ -47,7 +68,7 @@ class DetailScreen extends StatelessWidget {
                         )
                       ]),
                   child: Image.network(
-                    thumb,
+                    widget.thumb,
                     headers: const {
                       'User-Agent':
                           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
