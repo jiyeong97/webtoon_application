@@ -86,8 +86,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Column(
-                    crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         snapshot.data!.about,
@@ -106,7 +105,24 @@ class _DetailScreenState extends State<DetailScreen> {
               }
               return const Text("...");
             },
-          )
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          FutureBuilder(
+            future: episodes,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  children: [
+                    for(var episode in snapshot.data!)
+                    Text(episode.title)
+                  ],
+                );
+              }
+              return Container();
+            },
+          ),
         ],
       ),
     );
