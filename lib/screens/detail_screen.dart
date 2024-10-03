@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webtoon_application/models/webtoon_detail_model.dart';
 import 'package:webtoon_application/services/api_service.dart';
 import 'package:webtoon_application/models/webtoon_episode_model.dart';
+import 'package:webtoon_application/widgets/episode_widget.dart';
 
 class DetailScreen extends StatefulWidget {
   final String title, thumb, id;
@@ -27,6 +28,7 @@ class _DetailScreenState extends State<DetailScreen> {
     webtoon = ApiService.getToonById(widget.id);
     episodes = ApiService.getLatestEpisodesById(widget.id);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -113,41 +115,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     return Column(
                       children: [
                         for (var episode in snapshot.data!)
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.green.shade400,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 10,
-                                  offset: const Offset(8, 5),
-                                  color: Colors.black.withOpacity(0.5),
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    episode.title,
-                                    style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  const Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
+                          Episode(episode: episode)
                       ],
                     );
                   }
@@ -161,3 +129,4 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 }
+
