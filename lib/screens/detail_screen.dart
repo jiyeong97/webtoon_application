@@ -29,7 +29,6 @@ class _DetailScreenState extends State<DetailScreen> {
     episodes = ApiService.getLatestEpisodesById(widget.id);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +36,14 @@ class _DetailScreenState extends State<DetailScreen> {
         elevation: 2,
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.favorite_border_outlined,
+            ),
+          ),
+        ],
         title: Center(
           child: Text(
             widget.title,
@@ -115,7 +122,10 @@ class _DetailScreenState extends State<DetailScreen> {
                     return Column(
                       children: [
                         for (var episode in snapshot.data!)
-                          Episode(episode: episode, webtoonId:widget.id,)
+                          Episode(
+                            episode: episode,
+                            webtoonId: widget.id,
+                          )
                       ],
                     );
                   }
@@ -129,4 +139,3 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 }
-
