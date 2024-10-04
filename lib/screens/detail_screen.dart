@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webtoon_application/models/webtoon_detail_model.dart';
 import 'package:webtoon_application/services/api_service.dart';
 import 'package:webtoon_application/models/webtoon_episode_model.dart';
@@ -18,15 +19,50 @@ class DetailScreen extends StatefulWidget {
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
+
 class _DetailScreenState extends State<DetailScreen> {
   late Future<WebtoonDetailModel> webtoon;
   late Future<List<WebtoonEpisodeModel>> episodes;
+  late SharedPreferences prefs;
+  bool isLiked = false;
+
+  Future initPref() async{
+    prefs = await SharedPreferences.getInstance();
+    final likedToons = prefs.getStringList('likedToons');
+    if(likedToons != null){
+      if(likedToons.contains(widget.id)==true){
+        setState(() {
+          isLiked = true;
+        });
+      }
+    }
+    else{
+      prefs.setStringList('likedToons', []);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     webtoon = ApiService.getToonById(widget.id);
     episodes = ApiService.getLatestEpisodesById(widget.id);
+    initPref();
+  }
+
+  onHeartTap() async {
+    final likedToons = prefs.getStringList('likedToons');
+    if(likedToons != null){
+      if(isLiked){
+        likedToons.remove(widget.id);
+      }
+      else{
+        likedToons.add(widget.id);
+      }
+      await prefs.setStringList('likedToons', likedToons);
+      setState(() {
+        isLiked =! isLiked;
+      });
+    }
   }
 
   @override
@@ -38,9 +74,9 @@ class _DetailScreenState extends State<DetailScreen> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.favorite_border_outlined,
+            onPressed: onHeartTap,
+            icon: Icon(
+              isLiked? Icons.favorite : Icons.favorite_border_outlined,
             ),
           ),
         ],
